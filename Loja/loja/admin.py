@@ -19,3 +19,10 @@ admin.site.register(Produto, ProdutoAdmin)
 
 # código pra acessar: http://127.0.0.1:8080/admin
 # código pra rodar: python manage.py runserver 127.0.0.1:8080
+# ORDEM PARA RODAR O VENV: 
+# cd loja
+# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+# python -m venv venv
+# venv\Scripts\activate
+# pip install django Django==4.2.7
+# pip install pillow
