@@ -5,4 +5,4 @@ class Fabricante(models.Model):
     alterado_em = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '{}'.format(self. Fabricante)
+        return '{}'.format(self.Fabricante)
