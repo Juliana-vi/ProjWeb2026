@@ -23,6 +23,7 @@ admin.site.register(Produto, ProdutoAdmin)
 # cd loja
 # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 # winget install Python.Python.3.11
+# Y
 # py -3.11 -m venv venv
 # venv\Scripts\activate
 # pip install django Django==4.2.7
