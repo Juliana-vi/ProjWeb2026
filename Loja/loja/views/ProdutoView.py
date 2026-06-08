@@ -137,6 +137,22 @@ def create_produto_view(request, id=None):
             if (preco is not None) and ( preco != ""):
                 obj_produto.preco = preco
             obj_produto.criado_em = timezone.now()
+            obj_produto.alterado_em = obj_produto.criado_em
+            # Se for anexado arquivo, salva na pasta e guarda nome no objeto
+            if request.FILES is not None:
+                num_files = len(request.FILES.getlist('image'))
+                if num_files > 0:
+                    imagefile = request.FILES['image']
+                    print(imagefile)
+                    fs = FileSystemStorage()
+                    filename = fs.save(imagefile.name, imagefile)
+                    if (filename is not None) and (filename != ""):
+                        obj_produto.image = filename
+            obj_produto.save()
+            print("Produto %s salvo com sucesso" % produto)
+        except Exception as e:
+            print("Erro inserindo produto: %s" % e)
+        return redirect("/produto")
     return render(request, template_name='produto/produto-create.html',status=200)
 
     #if destaque is not None:
