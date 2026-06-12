@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from loja.models import Produto
+from loja.models import Produto, Fabricante, Categoria
 from datetime import timedelta, datetime
 from django.utils import timezone
 from django.core.files.storage import FileSystemStorage
@@ -45,7 +45,9 @@ def edit_produto_view(request, id=None):
         produtos = produtos.filter(id=id)
     produto = produtos.first()
     print(produto)
-    context = { 'produto': produto }
+    Fabricantes = Fabricante.objects.all()
+    Categorias = Categoria.objects.all()
+    context = { 'produto': produto, 'fabricantes' : Fabricantes, 'categorias' : Categorias}
     return render(request, template_name='produto/produto-edit.html', context=context, status=200)
 
 def edit_produto_postback(request, id=None):
@@ -62,6 +64,8 @@ def edit_produto_postback(request, id=None):
         print(destaque)
         print(promocao)
         print(msgPromocao)
+        print(preco)
+        print(image)
         try:
             obj_produto = Produto.objects.filter(id=id).first()
             obj_produto.Produto = produto
@@ -111,6 +115,7 @@ def delete_produto_postback(request, id=None):
     return redirect("/produto")
 
 def create_produto_view(request, id=None):
+    print("create")
     # Processa o post back gerado pela action
     if request.method == 'POST':
         produto = request.POST.get("Produto")
