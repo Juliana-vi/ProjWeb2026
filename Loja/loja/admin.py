@@ -16,6 +16,8 @@ class ProdutoAdmin(admin.ModelAdmin):
 admin.site.register(Fabricante, FabricanteAdmin) #adiciona a interface do adm
 admin.site.register(Categoria)
 admin.site.register(Produto, ProdutoAdmin)
+# incluir a tabela de usuário no final
+admin.site.register(Usuario)
 
 # link pra acessar: http://127.0.0.1:8080/admin
 # código pra rodar: python manage.py runserver 127.0.0.1:8080
