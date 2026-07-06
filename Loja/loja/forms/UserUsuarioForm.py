@@ -17,9 +17,10 @@ class UserUsuarioForm(ModelForm):
         # Usamos exclude para excluir campos específicos do sistema
         # exclude = ['']
         widgets = {
-            'user': forms.HiddenInput(),'perfil': forms.Select(attrs={'class': "form-control"}),'aniversario': forms.DateInput(attrs={'class': "form-control", "type": "date"})
-}
-# Adicione o código da classe UserForm
+            'user': forms.HiddenInput(), 
+            'perfil': forms.Select(attrs={'class': "form-control"}),
+            'aniversario': forms.DateInput(attrs={'class':"form-control", "type": "date"})
+            }
 class UserForm(ModelForm):
     class Meta:
         model = User
