@@ -26,9 +26,13 @@ def list_usuario_view(request, id=None):
     return render(request, template_name='usuario/usuario.html', context=context, status=200)
 
 def edit_usuario_view(request):
-    print("edit_usuario_view")
-    print(request.user)
-    #usuario = get_object_or_404(Usuario, user=request.user)
+    usuario = get_object_or_404(Usuario, user=request.user)
+    # Perceba que os forms foram transferidos para dentro do if e do else emailUnused = True
+    if request.method == 'POST':
+        usuarioForm = UserUsuarioForm(request.POST, instance=usuario)
+        userForm = UserForm(request.POST, instance=request.user)
+        # Verifica se o e-mail que o usuário está tentando utilizar
+        # em seu perfil já existe em outro perfil
     usuario = Usuario.objects.filter(user=request.user).first()
     print("edit_usuario_view1")
     usuarioForm = UserUsuarioForm(instance=usuario)
