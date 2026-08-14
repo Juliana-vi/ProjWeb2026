@@ -13,17 +13,16 @@
                 {% endif %}
                 {% csrf_token %}
                 {% for f in form %}
-                <div class="form-group">
-                    {{ f.label }}
-                    {{ f }}
-                    {% for error in f.errors %}
-                    <div class="invalid-feedback" style="display: initial;">{{ error
-                        }}</div>
+                    <div class="form-group">
+                        {{ f.label }}
+                        {{ f }}
+                        {% for error in f.errors %}
+                            <div class="invalid-feedback" style="display: initial;">{{ error
+                            }}</div>
+                         {% endfor %}
+                    </div>
                     {% endfor %}
-                </div>
-                {% endfor %}
-                <a href="{{link_href}}"
-                    style="display: block; text-align: center; margin-bottom: 20px;">{{link_text}}</a>
+                <a href="{{link_href}}" style="display: block; text-align: center; margin-bottom: 20px;">{{link_text}}</a>
                 <button type="submit" class="btn btn-primary">{{button_text}}</button>
             </form>
         </div>
