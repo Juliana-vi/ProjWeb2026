@@ -3,4 +3,4 @@ from .ProdutoUrls import *
 from .UsuarioUrls import *
 from .CategoriaUrls import *
 from .FabricanteUrls import *
-from .AuthUrls.py import *
+from .AuthUrls import *
