@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Favoritos{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+{% block content %}
+<div id="content">
+    <div class="container">
+        <div class="alert alert-info">
+            <h3>Meus Favoritos</h3>
+            Produtos favoritos [{{ favoritos | length }}]
+        </div>
+        {% if favoritos %}
+            {% for fav in favoritos %}
+            <div class="row">
+                <h5 class="col-md-3">{{ fav.produto.Produto }}</h5>
+                <span class="col-md-3">R$ {{ fav.produto.preco|floatformat:2 }}</span>
+                <a href="{% url 'create_carrinhoitem' fav.produto.id %}" class="btn btn-primary mb-2 mr-2"><i class="fa fa-plus"></i> Comprar</a>
+                <a href="{% url 'favoritar' fav.produto.id %}" class="btn btn-warning mb-2 mr-2"><i class="fa fa-heart"></i> Desfavoritar</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-warning mt-4" role="alert">
+                Você ainda não favoritou nenhum produto.
+            </div>
+        {% endif %}
+        <div class="mt-4">
+            <a href="{% url 'home' %}" class="btn btn-secondary">Voltar à loja</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

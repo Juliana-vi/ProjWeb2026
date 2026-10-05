@@ -14,3 +14,5 @@ PERFIL = (
 from .Usuario import Usuario
 from .Carrinho import Carrinho
 from .Carrinho import CarrinhoItem
+# inclua o modelo de favorito no final
+from .Favorito import Favorito

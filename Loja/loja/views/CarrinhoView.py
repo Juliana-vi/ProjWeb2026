@@ -3,6 +3,7 @@ from loja.models import Produto, Carrinho, CarrinhoItem, Usuario
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.views.decorators.http import require_POST
 
 # Função para adicionar um item ao carrinho
 def create_carrinhoitem_view(request, produto_id=None):
@@ -58,6 +59,7 @@ def create_carrinhoitem_view(request, produto_id=None):
 def list_carrinho_view(request):
     print ('list_carrinho_view')
     carrinho = None
+    carrinho_item = None
     # Tenta pegar o carrinho da sessão ou cria um novo carrinho
     carrinho_id = request.session.get('carrinho_id')
     if carrinho_id:
@@ -101,3 +103,39 @@ def confirmar_carrinho_view(request):
         'carrinho': carrinho
     }
     return render(request, 'carrinho/carrinho-confirmado.html', context=context)
+
+# Função para excluir um item do carrinho
+def remover_item_view(request, item_id):
+    item = get_object_or_404(CarrinhoItem, id=item_id)
+    # Verifica se o item pertence ao carrinho do usuário (opcional)
+    carrinho_id = request.session.get('carrinho_id')
+    if carrinho_id == item.carrinho.id:
+        item.delete()
+    return redirect('/carrinho')
+
+
+# Função para aumentar em 1 a quantidade de um item do carrinho
+@require_POST
+def aumentar_item_view(request, item_id):
+    item = get_object_or_404(CarrinhoItem, id=item_id)
+    # Verifica se o item pertence ao carrinho da sessão
+    carrinho_id = request.session.get('carrinho_id')
+    if item.carrinho and carrinho_id == item.carrinho.id:
+        item.quantidade += 1
+        item.save()
+        print ('item de carrinho: Acrescentou 1 item do produto ' + str(item.id))
+    return redirect('/carrinho')
+
+# Função para diminuir em 1 a quantidade de um item do carrinho
+# (a quantidade mínima é 1, para retirar o item use o botão Excluir)
+@require_POST
+def diminuir_item_view(request, item_id):
+    item = get_object_or_404(CarrinhoItem, id=item_id)
+    # Verifica se o item pertence ao carrinho da sessão
+    carrinho_id = request.session.get('carrinho_id')
+    if item.carrinho and carrinho_id == item.carrinho.id:
+        if item.quantidade > 1:
+            item.quantidade -= 1
+            item.save()
+            print ('item de carrinho: Retirou 1 item do produto ' + str(item.id))
+    return redirect('/carrinho')
